@@ -1,0 +1,343 @@
+<!-- Save as index.html and open with Live Server in VS Code -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Nova Protocol</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    font-family:'Orbitron', sans-serif;
+    background:black;
+}
+
+/* =========================
+   VIDEO BACKGROUND
+========================= */
+
+video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+}
+
+/* DARK OVERLAY */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at center,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.8));
+    z-index:-2;
+}
+
+/* PARTICLES */
+
+.particles{
+    position:fixed;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    opacity:0.7;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-10vh);
+    }
+}
+
+/* =========================
+   MAIN MENU
+========================= */
+
+.menu-container{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* TITLE */
+
+.game-title{
+    font-size:6rem;
+    font-weight:900;
+    color:white;
+    letter-spacing:8px;
+    text-shadow:
+        0 0 10px #00ffff,
+        0 0 25px #00ffff,
+        0 0 50px #0088ff;
+    margin-bottom:10px;
+
+    animation:flicker 3s infinite;
+}
+
+.subtitle{
+    color:#cccccc;
+    margin-bottom:50px;
+    letter-spacing:4px;
+    font-size:1rem;
+}
+
+/* FLICKER EFFECT */
+
+@keyframes flicker{
+    0%,18%,22%,25%,53%,57%,100%{
+        opacity:1;
+    }
+
+    20%,24%,55%{
+        opacity:0.5;
+    }
+}
+
+/* BUTTONS */
+
+.menu-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.menu-btn{
+    width:300px;
+    padding:18px;
+    border:2px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.05);
+    color:white;
+    font-size:1rem;
+    letter-spacing:3px;
+    cursor:pointer;
+    transition:0.3s;
+    backdrop-filter:blur(5px);
+
+    position:relative;
+    overflow:hidden;
+}
+
+/* BUTTON HOVER */
+
+.menu-btn:hover{
+    transform:scale(1.05);
+    border-color:#00ffff;
+    box-shadow:
+        0 0 10px #00ffff,
+        0 0 30px rgba(0,255,255,0.5);
+}
+
+/* GLOW SWEEP */
+
+.menu-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+    );
+    transition:0.5s;
+}
+
+.menu-btn:hover::before{
+    left:100%;
+}
+
+/* FOOTER */
+
+.footer{
+    position:absolute;
+    bottom:20px;
+    color:#999;
+    font-size:0.8rem;
+    letter-spacing:2px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .game-title{
+        font-size:3rem;
+    }
+
+    .menu-btn{
+        width:240px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-earth-from-space-1560081755460?download=1080p" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- MAIN MENU -->
+<div class="menu-container">
+
+    <h1 class="game-title">NOVA PROTOCOL</h1>
+
+    <p class="subtitle">
+        ENTER THE VOID
+    </p>
+
+    <div class="menu-buttons">
+
+        <button class="menu-btn" onclick="playSound(); startGame()">
+            START GAME
+        </button>
+
+        <button class="menu-btn" onclick="playSound(); continueGame()">
+            CONTINUE
+        </button>
+
+        <button class="menu-btn" onclick="playSound(); settingsMenu()">
+            SETTINGS
+        </button>
+
+        <button class="menu-btn" onclick="playSound(); creditsMenu()">
+            CREDITS
+        </button>
+
+        <button class="menu-btn" onclick="playSound(); exitGame()">
+            EXIT
+        </button>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    VERSION 1.0
+</div>
+
+<!-- AUDIO -->
+<audio id="clickSound">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particlesContainer = document.getElementById("particles");
+
+for(let i = 0; i < 100; i++){
+
+    const particle = document.createElement("div");
+
+    particle.classList.add("particle");
+
+    particle.style.left = Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+        Math.random() * 10 + 5 + "s";
+
+    particle.style.opacity =
+        Math.random();
+
+    particle.style.transform =
+        `scale(${Math.random() * 2})`;
+
+    particlesContainer.appendChild(particle);
+}
+
+/* =========================
+   BUTTON FUNCTIONS
+========================= */
+
+function playSound(){
+    document.getElementById("clickSound").play();
+}
+
+function startGame(){
+    alert("Starting Game...");
+}
+
+function continueGame(){
+    alert("Loading Save...");
+}
+
+function settingsMenu(){
+    alert("Opening Settings...");
+}
+
+function creditsMenu(){
+    alert("Created By You 🌌");
+}
+
+function exitGame(){
+    alert("Cannot escape the void.");
+}
+
+/* =========================
+   PARALLAX EFFECT
+========================= */
+
+document.addEventListener("mousemove", (e)=>{
+
+    let x = (window.innerWidth / 2 - e.pageX) / 50;
+    let y = (window.innerHeight / 2 - e.pageY) / 50;
+
+    document.querySelector(".menu-container")
+        .style.transform =
+        `translate(${x}px, ${y}px)`;
+
+});
+
+</script>
+
+</body>
+</html>
