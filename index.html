@@ -3,12 +3,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Nova Protocol</title>
+<title>Marvel Rivals Inspired Menu</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -20,22 +20,41 @@
 
 body{
     overflow:hidden;
-    font-family:'Orbitron', sans-serif;
+    font-family:'Rajdhani', sans-serif;
     background:black;
+    color:white;
 }
 
 /* =========================
-   VIDEO BACKGROUND
+   BACKGROUND
 ========================= */
 
-video{
+.bg{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
+    inset:0;
+
+    background:
+    linear-gradient(
+        120deg,
+        rgba(255,0,80,0.25),
+        rgba(0,140,255,0.25)
+    ),
+
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1920&auto=format&fit=crop")
+    center/cover no-repeat;
+
+    animation:bgZoom 18s infinite alternate ease-in-out;
     z-index:-3;
+}
+
+@keyframes bgZoom{
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.08);
+    }
 }
 
 /* DARK OVERLAY */
@@ -43,166 +62,346 @@ video{
 .overlay{
     position:fixed;
     inset:0;
+
     background:
     radial-gradient(circle at center,
-    rgba(0,0,0,0.2),
-    rgba(0,0,0,0.8));
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.85));
+
     z-index:-2;
 }
 
-/* PARTICLES */
+/* =========================
+   TOP BAR
+========================= */
 
-.particles{
-    position:fixed;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    z-index:-1;
-}
-
-.particle{
+.top-bar{
     position:absolute;
-    width:3px;
-    height:3px;
-    background:white;
-    border-radius:50%;
-    opacity:0.7;
-    animation:float linear infinite;
+    top:0;
+    left:0;
+
+    width:100%;
+    padding:20px 50px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    backdrop-filter:blur(10px);
 }
 
-@keyframes float{
-    from{
-        transform:translateY(100vh);
-    }
-    to{
-        transform:translateY(-10vh);
-    }
+.logo{
+    font-size:2rem;
+    font-weight:700;
+    letter-spacing:3px;
+
+    color:white;
+
+    text-shadow:
+    0 0 10px crimson,
+    0 0 20px crimson;
+}
+
+.player-info{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.currency{
+    background:rgba(255,255,255,0.08);
+    padding:10px 18px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
 }
 
 /* =========================
-   MAIN MENU
+   MAIN LAYOUT
 ========================= */
 
-.menu-container{
-    height:100vh;
+.main{
     display:flex;
-    flex-direction:column;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
-    text-align:center;
+
+    height:100vh;
+    padding:120px 70px;
 }
 
-/* TITLE */
+/* =========================
+   LEFT MENU
+========================= */
 
-.game-title{
-    font-size:6rem;
-    font-weight:900;
-    color:white;
-    letter-spacing:8px;
-    text-shadow:
-        0 0 10px #00ffff,
-        0 0 25px #00ffff,
-        0 0 50px #0088ff;
-    margin-bottom:10px;
-
-    animation:flicker 3s infinite;
-}
-
-.subtitle{
-    color:#cccccc;
-    margin-bottom:50px;
-    letter-spacing:4px;
-    font-size:1rem;
-}
-
-/* FLICKER EFFECT */
-
-@keyframes flicker{
-    0%,18%,22%,25%,53%,57%,100%{
-        opacity:1;
-    }
-
-    20%,24%,55%{
-        opacity:0.5;
-    }
-}
-
-/* BUTTONS */
-
-.menu-buttons{
+.left-panel{
     display:flex;
     flex-direction:column;
-    gap:20px;
+    gap:18px;
 }
 
 .menu-btn{
-    width:300px;
-    padding:18px;
-    border:2px solid rgba(255,255,255,0.2);
-    background:rgba(255,255,255,0.05);
+
+    width:320px;
+
+    padding:20px;
+
+    border:none;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
+    );
+
     color:white;
-    font-size:1rem;
-    letter-spacing:3px;
+
+    font-size:1.2rem;
+    font-weight:700;
+
+    letter-spacing:2px;
+
     cursor:pointer;
+
+    border-left:5px solid transparent;
+
     transition:0.3s;
-    backdrop-filter:blur(5px);
 
     position:relative;
+
     overflow:hidden;
+
+    backdrop-filter:blur(6px);
 }
 
 /* BUTTON HOVER */
 
 .menu-btn:hover{
-    transform:scale(1.05);
-    border-color:#00ffff;
+
+    transform:
+    translateX(12px)
+    scale(1.02);
+
+    border-left:5px solid #00b7ff;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0,183,255,0.3),
+        rgba(255,255,255,0.03)
+    );
+
     box-shadow:
-        0 0 10px #00ffff,
-        0 0 30px rgba(0,255,255,0.5);
+    0 0 25px rgba(0,183,255,0.5);
 }
 
-/* GLOW SWEEP */
+/* ENERGY SWEEP */
 
 .menu-btn::before{
+
     content:"";
+
     position:absolute;
+
     top:0;
-    left:-100%;
+    left:-120%;
+
     width:100%;
     height:100%;
-    background:linear-gradient(
+
+    background:
+    linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,0.3),
+        rgba(255,255,255,0.25),
         transparent
     );
-    transition:0.5s;
+
+    transition:0.6s;
 }
 
 .menu-btn:hover::before{
-    left:100%;
+    left:120%;
 }
 
-/* FOOTER */
+/* =========================
+   CHARACTER PANEL
+========================= */
 
-.footer{
+.character-panel{
+
+    width:420px;
+
+    padding:25px;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
+    );
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,0.5);
+}
+
+.character-image{
+
+    width:100%;
+    height:500px;
+
+    border-radius:20px;
+
+    background:
+    url("https://images.unsplash.com/photo-1531259683007-016a7b628fc3?q=80&w=1200&auto=format&fit=crop")
+    center/cover no-repeat;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+/* CHARACTER GLOW */
+
+.character-image::after{
+
+    content:"";
+
     position:absolute;
-    bottom:20px;
-    color:#999;
-    font-size:0.8rem;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.7),
+        transparent
+    );
+}
+
+.character-name{
+
+    margin-top:20px;
+
+    font-size:2rem;
+
+    font-weight:700;
+
     letter-spacing:2px;
 }
 
-/* RESPONSIVE */
+.character-role{
 
-@media(max-width:768px){
+    color:#00b7ff;
 
-    .game-title{
-        font-size:3rem;
+    margin-top:5px;
+
+    letter-spacing:2px;
+}
+
+/* =========================
+   BOTTOM BAR
+========================= */
+
+.bottom-bar{
+
+    position:absolute;
+
+    bottom:0;
+    left:0;
+
+    width:100%;
+
+    padding:20px 50px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.7),
+        transparent
+    );
+}
+
+.news{
+
+    font-size:0.95rem;
+    color:#bbbbbb;
+}
+
+/* PLAY BUTTON */
+
+.play-btn{
+
+    padding:18px 60px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff004c,
+        #ff4d00
+    );
+
+    color:white;
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 0 30px rgba(255,0,76,0.5);
+}
+
+.play-btn:hover{
+
+    transform:
+    scale(1.08);
+
+    box-shadow:
+    0 0 50px rgba(255,0,76,0.9);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .main{
+        flex-direction:column;
+        justify-content:center;
+        gap:50px;
+    }
+
+    .character-panel{
+        width:90%;
+    }
+
+    .left-panel{
+        width:100%;
+        align-items:center;
     }
 
     .menu-btn{
-        width:240px;
+        width:90%;
     }
 
 }
@@ -212,114 +411,128 @@ video{
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<video autoplay muted loop>
-    <source src="https://cdn.coverr.co/videos/coverr-earth-from-space-1560081755460?download=1080p" type="video/mp4">
-</video>
-
+<div class="bg"></div>
 <div class="overlay"></div>
 
-<!-- PARTICLES -->
-<div class="particles" id="particles"></div>
+<!-- TOP BAR -->
 
-<!-- MAIN MENU -->
-<div class="menu-container">
+<div class="top-bar">
 
-    <h1 class="game-title">NOVA PROTOCOL</h1>
+    <div class="logo">
+        RIVALS
+    </div>
 
-    <p class="subtitle">
-        ENTER THE VOID
-    </p>
+    <div class="player-info">
 
-    <div class="menu-buttons">
+        <div class="currency">
+            ⚡ 12,450
+        </div>
 
-        <button class="menu-btn" onclick="playSound(); startGame()">
-            START GAME
-        </button>
-
-        <button class="menu-btn" onclick="playSound(); continueGame()">
-            CONTINUE
-        </button>
-
-        <button class="menu-btn" onclick="playSound(); settingsMenu()">
-            SETTINGS
-        </button>
-
-        <button class="menu-btn" onclick="playSound(); creditsMenu()">
-            CREDITS
-        </button>
-
-        <button class="menu-btn" onclick="playSound(); exitGame()">
-            EXIT
-        </button>
+        <div class="currency">
+            💎 780
+        </div>
 
     </div>
 
 </div>
 
-<div class="footer">
-    VERSION 1.0
+<!-- MAIN -->
+
+<div class="main">
+
+    <!-- LEFT MENU -->
+
+    <div class="left-panel">
+
+        <button class="menu-btn" onclick="playClick()">
+            PLAY
+        </button>
+
+        <button class="menu-btn" onclick="playClick()">
+            HEROES
+        </button>
+
+        <button class="menu-btn" onclick="playClick()">
+            BATTLE PASS
+        </button>
+
+        <button class="menu-btn" onclick="playClick()">
+            EVENTS
+        </button>
+
+        <button class="menu-btn" onclick="playClick()">
+            STORE
+        </button>
+
+        <button class="menu-btn" onclick="playClick()">
+            SETTINGS
+        </button>
+
+    </div>
+
+    <!-- CHARACTER PANEL -->
+
+    <div class="character-panel">
+
+        <div class="character-image"></div>
+
+        <div class="character-name">
+            SHADOW STRIKER
+        </div>
+
+        <div class="character-role">
+            DUELIST
+        </div>
+
+    </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+
+<div class="bottom-bar">
+
+    <div class="news">
+        NEW EVENT: COSMIC COLLISION LIVE NOW
+    </div>
+
+    <button class="play-btn" onclick="startMatch()">
+        START MATCH
+    </button>
+
 </div>
 
 <!-- AUDIO -->
-<audio id="clickSound">
-    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+
+<audio id="hoverSound">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3">
 </audio>
 
 <script>
 
 /* =========================
-   PARTICLES
+   AUDIO
 ========================= */
 
-const particlesContainer = document.getElementById("particles");
+function playClick(){
 
-for(let i = 0; i < 100; i++){
+    const sound =
+    document.getElementById("hoverSound");
 
-    const particle = document.createElement("div");
+    sound.currentTime = 0;
 
-    particle.classList.add("particle");
-
-    particle.style.left = Math.random() * 100 + "vw";
-
-    particle.style.animationDuration =
-        Math.random() * 10 + 5 + "s";
-
-    particle.style.opacity =
-        Math.random();
-
-    particle.style.transform =
-        `scale(${Math.random() * 2})`;
-
-    particlesContainer.appendChild(particle);
+    sound.play();
 }
 
 /* =========================
-   BUTTON FUNCTIONS
+   BUTTON ACTION
 ========================= */
 
-function playSound(){
-    document.getElementById("clickSound").play();
-}
+function startMatch(){
 
-function startGame(){
-    alert("Starting Game...");
-}
+    playClick();
 
-function continueGame(){
-    alert("Loading Save...");
-}
-
-function settingsMenu(){
-    alert("Opening Settings...");
-}
-
-function creditsMenu(){
-    alert("Created By You 🌌");
-}
-
-function exitGame(){
-    alert("Cannot escape the void.");
+    alert("MATCHMAKING...");
 }
 
 /* =========================
@@ -328,12 +541,39 @@ function exitGame(){
 
 document.addEventListener("mousemove", (e)=>{
 
-    let x = (window.innerWidth / 2 - e.pageX) / 50;
-    let y = (window.innerHeight / 2 - e.pageY) / 50;
+    const x =
+    (window.innerWidth / 2 - e.pageX) / 40;
 
-    document.querySelector(".menu-container")
-        .style.transform =
-        `translate(${x}px, ${y}px)`;
+    const y =
+    (window.innerHeight / 2 - e.pageY) / 40;
+
+    document.querySelector(".character-panel")
+    .style.transform =
+    `translate(${x}px, ${y}px)`;
+
+});
+
+/* =========================
+   MENU ANIMATION
+========================= */
+
+const buttons =
+document.querySelectorAll(".menu-btn");
+
+buttons.forEach((btn, index)=>{
+
+    btn.style.opacity = "0";
+    btn.style.transform = "translateX(-100px)";
+
+    setTimeout(()=>{
+
+        btn.style.transition = "0.5s";
+
+        btn.style.opacity = "1";
+
+        btn.style.transform = "translateX(0px)";
+
+    }, index * 120);
 
 });
 
